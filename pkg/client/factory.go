@@ -1,8 +1,8 @@
 package client
 
 import (
-	"kope.io/klog/pkg/grpc"
-	"kope.io/klog/pkg/proto"
+	"kope.io/klogs/pkg/grpc"
+	"kope.io/klogs/pkg/proto"
 )
 
 type Factory interface {

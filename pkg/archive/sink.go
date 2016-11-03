@@ -1,7 +1,7 @@
 package archive
 
 import (
-	"kope.io/klog/pkg/proto"
+	"kope.io/klogs/pkg/proto"
 )
 
 type Sink interface {

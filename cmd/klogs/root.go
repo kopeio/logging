@@ -5,7 +5,7 @@ import (
 	"github.com/golang/glog"
 	"github.com/spf13/cobra"
 	"io"
-	"kope.io/klog/pkg/client"
+	"kope.io/klogs/pkg/client"
 )
 
 const DefaultServerUrl = "http://127.0.0.1:7777"

@@ -6,7 +6,7 @@ import (
 	"github.com/golang/glog"
 	"golang.org/x/net/context"
 	"io"
-	"kope.io/klog/pkg/proto"
+	"kope.io/klogs/pkg/proto"
 	"strconv"
 	"strings"
 	"time"

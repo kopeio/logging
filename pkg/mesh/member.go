@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/golang/glog"
 	"google.golang.org/grpc"
-	"kope.io/klog/pkg/proto"
+	"kope.io/klogs/pkg/proto"
 	"net/url"
 	"sync"
 	"time"

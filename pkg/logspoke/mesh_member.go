@@ -5,7 +5,7 @@ import (
 	"github.com/golang/glog"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-	"kope.io/klog/pkg/proto"
+	"kope.io/klogs/pkg/proto"
 	"net/url"
 	"time"
 )

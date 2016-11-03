@@ -1,3 +1,3 @@
-# klog
+# klogs
 
 Log aggregation without aggregation

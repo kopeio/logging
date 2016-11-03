@@ -5,9 +5,9 @@ import (
 	"github.com/golang/glog"
 	"golang.org/x/net/context"
 	"io"
-	"kope.io/klog/pkg/grpc"
-	"kope.io/klog/pkg/mesh"
-	"kope.io/klog/pkg/proto"
+	"kope.io/klogs/pkg/grpc"
+	"kope.io/klogs/pkg/mesh"
+	"kope.io/klogs/pkg/proto"
 	"sync"
 )
 

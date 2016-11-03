@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/golang/glog"
 	"io"
-	"kope.io/klog/pkg/proto"
+	"kope.io/klogs/pkg/proto"
 	"os"
 	"path"
 	"time"

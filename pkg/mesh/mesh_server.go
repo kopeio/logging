@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/golang/glog"
 	"golang.org/x/net/context"
-	"kope.io/klog/pkg/grpc"
-	"kope.io/klog/pkg/proto"
+	"kope.io/klogs/pkg/grpc"
+	"kope.io/klogs/pkg/proto"
 	"sync"
 )
 

@@ -2,8 +2,8 @@ package loghub
 
 import (
 	"github.com/golang/glog"
-	"kope.io/klog/pkg/grpc"
-	"kope.io/klog/pkg/mesh"
+	"kope.io/klogs/pkg/grpc"
+	"kope.io/klogs/pkg/mesh"
 )
 
 type Options struct {

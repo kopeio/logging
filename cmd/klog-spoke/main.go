@@ -6,7 +6,7 @@ import (
 	"github.com/golang/glog"
 	"github.com/spf13/pflag"
 	"io/ioutil"
-	"kope.io/klog/pkg/logspoke"
+	"kope.io/klogs/pkg/logspoke"
 	"net"
 	"os"
 	"strings"

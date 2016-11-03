@@ -6,7 +6,7 @@ import (
 	"github.com/golang/glog"
 	"io"
 	"io/ioutil"
-	"kope.io/klog/pkg/proto"
+	"kope.io/klogs/pkg/proto"
 	"os"
 	"path"
 	"strings"

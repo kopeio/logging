@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/spf13/cobra"
 	"io"
-	"kope.io/klog/pkg/client"
+	"kope.io/klogs/pkg/client"
 )
 
 func NewCmdStreams(factory client.Factory, out io.Writer) *cobra.Command {

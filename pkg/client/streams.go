@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"io"
-	"kope.io/klog/pkg/proto"
+	"kope.io/klogs/pkg/proto"
 )
 
 type ListStreamsOptions struct {

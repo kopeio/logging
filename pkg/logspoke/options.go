@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/golang/glog"
 	"io/ioutil"
-	"kope.io/klog/pkg/archive"
-	"kope.io/klog/pkg/archive/s3archive"
+	"kope.io/klogs/pkg/archive"
+	"kope.io/klogs/pkg/archive/s3archive"
 	"net/url"
 	"strings"
 )

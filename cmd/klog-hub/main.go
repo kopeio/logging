@@ -6,8 +6,8 @@ import (
 	"github.com/golang/glog"
 	"github.com/spf13/pflag"
 	"io/ioutil"
-	"kope.io/klog/pkg/grpc"
-	"kope.io/klog/pkg/loghub"
+	"kope.io/klogs/pkg/grpc"
+	"kope.io/klogs/pkg/loghub"
 	"os"
 	"strings"
 )
