@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  name: klog-hub
+  namespace: kube-system
+spec:
+  rules:
+  - host: logs.useast1.k8s.justinsb.com
+    http:
+      paths:
+      - backend:
+          serviceName: loghub
+          servicePort: 7777
+        path: /
+  tls:
+  - hosts:
+    - logs.useast1.k8s.justinsb.com
+    secretName: tls-logs.useast1.k8s.justinsb.com

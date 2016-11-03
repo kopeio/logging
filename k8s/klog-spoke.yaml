@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: klog-spoke
+  namespace: kube-system
+  labels:
+    app: klog-spoke
+    version: v1
+spec:
+  template:
+    metadata:
+      labels:
+        name: klog-spoke
+        namespace: kube-system
+    spec:
+      terminationGracePeriodSeconds: 60
+      #hostPID: false
+      #hostIPC: false
+      #hostNetwork: false
+      containers:
+        - resources:
+            requests:
+              cpu: 0.02
+          #securityContext:
+          #  privileged: false
+          image: kopeio/klog-spoke
+          name: klog-spoke
+          command:
+            - /klog-spoke
+            - --v=8
+            - --hub=http://klog-hub-mesh:7878
+            - --pod-dir=/root/var/lib/kubelet/pods
+            - --container-dir=/root/var/lib/docker/containers
+            - --nodename=@/root/etc/hostname
+          volumeMounts:
+            - name: root
+              mountPath: /root
+              readOnly: false
+      volumes:
+        - name: root
+          hostPath:
+            path: /

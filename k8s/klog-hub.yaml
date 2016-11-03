@@ -1,0 +1,72 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: klog-hub
+  namespace: kube-system
+  annotations:
+    dns.alpha.kubernetes.io/external: logs.useast1.k8s.justinsb.com
+spec:
+  type: NodePort
+  ports:
+  - port: 7777
+    targetPort: grpc
+    nodePort: 32321
+  selector:
+    app: klog-hub
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: klog-hub-mesh
+  namespace: kube-system
+spec:
+  type: ClusterIP
+  ports:
+  - port: 7878
+    targetPort: grpc-mesh
+  selector:
+    app: klog-hub
+
+---
+
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: klog-hub
+  namespace: kube-system
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: klog-hub
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+      - name: klog-hub
+        image: kopeio/klog-hub:latest
+        command:
+          - /klog-hub
+          - --v=5
+          - --grpc-public-listen=https://0.0.0.0:7777
+          - --grpc-public-tls-cert=/secrets/tls/tls.crt
+          - --grpc-public-tls-key=/secrets/tls/tls.key
+          - --grpc-mesh-listen=http://0.0.0.0:7878
+        ports:
+        - name: grpc
+          containerPort: 7777
+          protocol: TCP
+        - name: grpc-mesh
+          containerPort: 7878
+          protocol: TCP
+        volumeMounts:
+        - name: secrets-tls
+          mountPath: /secrets/tls
+      volumes:
+      - name: secrets-tls
+        secret:
+          secretName: tls-logs.useast1.k8s.justinsb.com
+
+---

@@ -1,0 +1,10 @@
+# IntelliJ
+*.iml
+
+# Bazel
+bazel-bin
+bazel-genfiles
+bazel-klog
+bazel-out
+bazel-testlogs
+
