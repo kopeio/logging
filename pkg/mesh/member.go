@@ -3,8 +3,8 @@ package mesh
 import (
 	"fmt"
 	"github.com/golang/glog"
-	"kope.io/klog/pkg/proto"
 	"google.golang.org/grpc"
+	"kope.io/klog/pkg/proto"
 	"net/url"
 	"sync"
 	"time"

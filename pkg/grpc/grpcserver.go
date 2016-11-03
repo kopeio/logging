@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/golang/glog"
+	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"net"
@@ -14,6 +15,8 @@ type GRPCOptions struct {
 	Listen  string
 	TLSCert []byte
 	TLSKey  []byte
+
+	Authorizer Authorizer
 }
 
 type GRPCServer struct {
@@ -45,10 +48,29 @@ func NewGrpcServer(options *GRPCOptions) (*GRPCServer, error) {
 			return nil, err
 		}
 
-		creds := credentials.NewServerTLSFromCert(&cert)
-		opts = []grpc.ServerOption{grpc.Creds(creds)}
+		credentials := credentials.NewServerTLSFromCert(&cert)
+		opts = append(opts, grpc.Creds(credentials))
 	} else {
 		return nil, fmt.Errorf("scheme not recognized: %q", u.Scheme)
+	}
+
+	if options.Authorizer != nil {
+		opts = append(opts, grpc.StreamInterceptor(func(srv interface{}, stream grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
+			glog.Infof("Authorizing request %v", info)
+			if err := options.Authorizer.Authorize(stream.Context()); err != nil {
+				return err
+			}
+
+			return handler(srv, stream)
+		}))
+		opts = append(opts, grpc.UnaryInterceptor(func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+			glog.Infof("Authorizing request %v", info)
+			if err := options.Authorizer.Authorize(ctx); err != nil {
+				return nil, err
+			}
+
+			return handler(ctx, req)
+		}))
 	}
 	g.Server = grpc.NewServer(opts...)
 

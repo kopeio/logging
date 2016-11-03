@@ -2,13 +2,33 @@ package grpc
 
 import (
 	"fmt"
+	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"net/url"
+	"strings"
 )
+
+const MetadataKeyToken = "token"
 
 type GRPCClientOptions struct {
 	Server string
+
+	Token string
+}
+
+type tokenCreds struct {
+	Token string
+}
+
+func (c *tokenCreds) GetRequestMetadata(context.Context, ...string) (map[string]string, error) {
+	return map[string]string{
+		MetadataKeyToken: c.Token,
+	}, nil
+}
+
+func (c *tokenCreds) RequireTransportSecurity() bool {
+	return true
 }
 
 func NewGRPCClient(options *GRPCClientOptions) (*grpc.ClientConn, error) {
@@ -21,10 +41,13 @@ func NewGRPCClient(options *GRPCClientOptions) (*grpc.ClientConn, error) {
 	if u.Scheme == "http" {
 		opts = append(opts, grpc.WithInsecure())
 	} else if u.Scheme == "https" {
-		var sn string
-		//if *serverHostOverride != "" {
-		//	sn = *serverHostOverride
-		//}
+		// TODO: Unclear if we need to set this.  Feels prudent!
+		sn := u.Host
+		colonIndex := strings.Index(sn, ":")
+		if colonIndex != -1 {
+			sn = sn[:colonIndex]
+		}
+
 		var creds credentials.TransportCredentials
 		//if *caFile != "" {
 		//	var err error
@@ -40,6 +63,11 @@ func NewGRPCClient(options *GRPCClientOptions) (*grpc.ClientConn, error) {
 	} else {
 		return nil, fmt.Errorf("unknown scheme %q", u.Scheme)
 	}
+
+	if options.Token != "" {
+		opts = append(opts, grpc.WithPerRPCCredentials(&tokenCreds{Token: options.Token}))
+	}
+
 	conn, err := grpc.Dial(u.Host, opts...)
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to server %q: %v", u.Host, err)

@@ -3,9 +3,9 @@ package mesh
 import (
 	"fmt"
 	"github.com/golang/glog"
+	"golang.org/x/net/context"
 	"kope.io/klog/pkg/grpc"
 	"kope.io/klog/pkg/proto"
-	"golang.org/x/net/context"
 	"sync"
 )
 

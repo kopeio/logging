@@ -11,6 +11,7 @@ type Factory interface {
 
 type DefaultFactory struct {
 	Server string
+	Token  string
 }
 
 var _ Factory = &DefaultFactory{}
@@ -18,6 +19,7 @@ var _ Factory = &DefaultFactory{}
 func (f *DefaultFactory) LogServerClient() (proto.LogServerClient, error) {
 	options := &grpc.GRPCClientOptions{
 		Server: f.Server,
+		Token:  f.Token,
 	}
 	conn, err := grpc.NewGRPCClient(options)
 	if err != nil {

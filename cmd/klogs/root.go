@@ -3,9 +3,9 @@ package main
 import (
 	goflag "flag"
 	"github.com/golang/glog"
-	"kope.io/klog/pkg/client"
 	"github.com/spf13/cobra"
 	"io"
+	"kope.io/klog/pkg/client"
 )
 
 const DefaultServerUrl = "http://127.0.0.1:7777"
@@ -25,6 +25,7 @@ func NewRootCommand(out io.Writer) *cobra.Command {
 	cmd.PersistentFlags().AddGoFlagSet(goflag.CommandLine)
 
 	cmd.PersistentFlags().StringVar(&factory.Server, "server", factory.Server, "Server to query")
+	cmd.PersistentFlags().StringVar(&factory.Token, "token", factory.Token, "Token to use to authenticate to the server")
 
 	// create subcommands
 	cmd.AddCommand(NewCmdStreams(factory, out))

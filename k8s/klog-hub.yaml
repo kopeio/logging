@@ -53,6 +53,7 @@ spec:
           - --grpc-public-listen=https://0.0.0.0:7777
           - --grpc-public-tls-cert=/secrets/tls/tls.crt
           - --grpc-public-tls-key=/secrets/tls/tls.key
+          - --grpc-public-token=supersecret
           - --grpc-mesh-listen=http://0.0.0.0:7878
         ports:
         - name: grpc

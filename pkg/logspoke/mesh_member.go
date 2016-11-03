@@ -3,9 +3,9 @@ package logspoke
 import (
 	"fmt"
 	"github.com/golang/glog"
-	"kope.io/klog/pkg/proto"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
+	"kope.io/klog/pkg/proto"
 	"net/url"
 	"time"
 )

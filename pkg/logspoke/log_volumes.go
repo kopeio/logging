@@ -3,8 +3,8 @@ package logspoke
 import (
 	"fmt"
 	"github.com/golang/glog"
-	"kope.io/klog/pkg/proto"
 	"io"
+	"kope.io/klog/pkg/proto"
 	"os"
 	"path"
 	"time"

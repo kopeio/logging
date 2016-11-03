@@ -17,6 +17,7 @@ go_binary(
     deps = [
         "@com_github_golang_glog//:go_default_library",
         "@com_github_spf13_pflag//:go_default_library",
+        "//pkg/grpc:go_default_library",
         "//pkg/loghub:go_default_library",
     ],
 )

@@ -4,9 +4,10 @@ import (
 	goflag "flag"
 	"fmt"
 	"github.com/golang/glog"
-	"kope.io/klog/pkg/loghub"
 	"github.com/spf13/pflag"
 	"io/ioutil"
+	"kope.io/klog/pkg/grpc"
+	"kope.io/klog/pkg/loghub"
 	"os"
 	"strings"
 )
@@ -25,11 +26,13 @@ func main() {
 
 	var grpcPublicTlsCert string
 	var grpcPublicTlsKey string
+	var grpcPublicToken string
 
 	flags.StringVar(&options.LogGRPC.Listen, "grpc-public-listen", options.LogGRPC.Listen, "Address on which to listen for public request")
 	flags.StringVar(&options.MeshGRPC.Listen, "grpc-mesh-listen", options.MeshGRPC.Listen, "Address on which to listen for internal requests")
 	flags.StringVar(&grpcPublicTlsCert, "grpc-public-tls-cert", grpcPublicTlsCert, "Path to TLS certificate")
 	flags.StringVar(&grpcPublicTlsKey, "grpc-public-tls-key", grpcPublicTlsKey, "Path to TLS private key")
+	flags.StringVar(&grpcPublicToken, "grpc-public-token", grpcPublicToken, "Token required (use something better in production!)")
 
 	// Trick to avoid 'logging before flag.Parse' warning
 	goflag.CommandLine.Parse([]string{})
@@ -73,6 +76,10 @@ func main() {
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "error reading file %q: %v", grpcPublicTlsKey, err)
 		}
+	}
+
+	if grpcPublicToken != "" {
+		options.LogGRPC.Authorizer = grpc.NewTokenAuthorizer([]string{grpcPublicToken})
 	}
 
 	err = loghub.ListenAndServe(&options)

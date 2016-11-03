@@ -2,9 +2,9 @@ package client
 
 import (
 	"fmt"
-	"kope.io/klog/pkg/proto"
 	"golang.org/x/net/context"
 	"io"
+	"kope.io/klog/pkg/proto"
 )
 
 type ListStreamsOptions struct {

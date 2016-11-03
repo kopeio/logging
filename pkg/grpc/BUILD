@@ -13,6 +13,7 @@ load(
 go_library(
     name = "go_default_library",
     srcs = [
+        "authorizer.go",
         "grpcclient.go",
         "grpcserver.go",
     ],
@@ -21,6 +22,7 @@ go_library(
         "@com_github_golang_glog//:go_default_library",
         "@org_golang_google_grpc//:go_default_library",
         "@org_golang_google_grpc//credentials:go_default_library",
+        "@org_golang_google_grpc//metadata:go_default_library",
         "@org_golang_x_net//context:go_default_library",
         "//pkg/archive:go_default_library",
         "//pkg/archive/s3archive:go_default_library",

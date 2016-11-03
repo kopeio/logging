@@ -1,9 +1,9 @@
 package main
 
 import (
-	"kope.io/klog/pkg/client"
 	"github.com/spf13/cobra"
 	"io"
+	"kope.io/klog/pkg/client"
 )
 
 func NewCmdStreams(factory client.Factory, out io.Writer) *cobra.Command {
