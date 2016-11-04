@@ -1,4 +1,4 @@
-package main
+package main // import "kope.io/klogs/cmd/klog-spoke"
 
 import (
 	goflag "flag"
