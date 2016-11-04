@@ -6,8 +6,8 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-var TokenRequiredError = errors.New("token is required")
-var InvalidTokenError = errors.New("invalid token")
+var AuthorizationRequired = errors.New("authorization is required")
+var InvalidAuthorization = errors.New("unauthorized")
 
 type Authorizer interface {
 	Authorize(ctx context.Context) error
@@ -30,16 +30,16 @@ func NewTokenAuthorizer(validTokens []string) *TokenAuthorizer {
 func (t *TokenAuthorizer) Authorize(ctx context.Context) error {
 	md, ok := metadata.FromContext(ctx)
 	if !ok {
-		return TokenRequiredError
+		return AuthorizationRequired
 	}
 
 	tokens := md[MetadataKeyToken]
 	if len(tokens) != 1 || tokens[0] == "" {
-		return TokenRequiredError
+		return AuthorizationRequired
 	}
 	_, found := t.valid[tokens[0]]
 	if !found {
-		return InvalidTokenError
+		return InvalidAuthorization
 	}
 	return nil
 }

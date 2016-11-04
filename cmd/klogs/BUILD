@@ -14,6 +14,7 @@ go_binary(
     name = "klogs",
     srcs = [
         "main.go",
+        "passwordflag.go",
         "root.go",
         "search.go",
         "streams.go",

@@ -56,7 +56,7 @@ func NewGrpcServer(options *GRPCOptions) (*GRPCServer, error) {
 
 	if options.Authorizer != nil {
 		opts = append(opts, grpc.StreamInterceptor(func(srv interface{}, stream grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
-			glog.Infof("Authorizing request %v", info)
+			glog.Infof("Authorizing request %v", info.FullMethod)
 			if err := options.Authorizer.Authorize(stream.Context()); err != nil {
 				return err
 			}
@@ -64,7 +64,7 @@ func NewGrpcServer(options *GRPCOptions) (*GRPCServer, error) {
 			return handler(srv, stream)
 		}))
 		opts = append(opts, grpc.UnaryInterceptor(func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
-			glog.Infof("Authorizing request %v", info)
+			glog.Infof("Authorizing request %v", info.FullMethod)
 			if err := options.Authorizer.Authorize(ctx); err != nil {
 				return nil, err
 			}
@@ -78,7 +78,7 @@ func NewGrpcServer(options *GRPCOptions) (*GRPCServer, error) {
 }
 
 func (g *GRPCServer) ListenAndServe() error {
-	glog.Infof("Listening on %s", g.listen)
+	glog.Infof("Listening on %s", g.listen.String())
 
 	lis, err := net.Listen("tcp", g.listen.Host)
 	if err != nil {

@@ -21,7 +21,7 @@ func NewCmdSearch(factory client.Factory, out io.Writer) *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVarP(&options.Output, "ouptut", "o", options.Output, "Output format: raw, describe")
+	cmd.PersistentFlags().StringVarP(&options.Output, "output", "o", options.Output, "Output format: raw, describe")
 
 	return cmd
 }

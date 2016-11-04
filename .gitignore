@@ -4,7 +4,7 @@
 # Bazel
 bazel-bin
 bazel-genfiles
-bazel-klog
+bazel-klogs
 bazel-out
 bazel-testlogs
 

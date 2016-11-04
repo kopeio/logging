@@ -11,10 +11,16 @@ import (
 
 const MetadataKeyToken = "token"
 
+const MetadataKeyUsername = "user"
+const MetadataKeyPassword = "password"
+
 type GRPCClientOptions struct {
 	Server string
 
 	Token string
+
+	Username string
+	Password string
 }
 
 type tokenCreds struct {
@@ -28,6 +34,22 @@ func (c *tokenCreds) GetRequestMetadata(context.Context, ...string) (map[string]
 }
 
 func (c *tokenCreds) RequireTransportSecurity() bool {
+	return true
+}
+
+type basicAuthCreds struct {
+	Username string
+	Password string
+}
+
+func (c *basicAuthCreds) GetRequestMetadata(context.Context, ...string) (map[string]string, error) {
+	return map[string]string{
+		MetadataKeyUsername: c.Username,
+		MetadataKeyPassword: c.Password,
+	}, nil
+}
+
+func (c *basicAuthCreds) RequireTransportSecurity() bool {
 	return true
 }
 
@@ -66,6 +88,8 @@ func NewGRPCClient(options *GRPCClientOptions) (*grpc.ClientConn, error) {
 
 	if options.Token != "" {
 		opts = append(opts, grpc.WithPerRPCCredentials(&tokenCreds{Token: options.Token}))
+	} else if options.Username != "" {
+		opts = append(opts, grpc.WithPerRPCCredentials(&basicAuthCreds{Username: options.Username, Password: options.Password}))
 	}
 
 	conn, err := grpc.Dial(u.Host, opts...)

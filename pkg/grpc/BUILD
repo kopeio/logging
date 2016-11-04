@@ -16,6 +16,7 @@ go_library(
         "authorizer.go",
         "grpcclient.go",
         "grpcserver.go",
+        "kubernetes.go",
     ],
     tags = ["automanaged"],
     deps = [
