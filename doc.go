@@ -1,2 +1,2 @@
 // Package klogs is the parent package for the klogs tool
-package klogs
+package klogs // import "kope.io/klogs"
