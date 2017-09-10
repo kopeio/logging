@@ -50,7 +50,7 @@ func (k *KubernetesAuthorizer) checkUsernamePassword(username, password string) 
 }
 
 func (k *KubernetesAuthorizer) Authorize(ctx context.Context) error {
-	md, ok := metadata.FromContext(ctx)
+	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
 		return AuthorizationRequired
 	}

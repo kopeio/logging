@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@bazel_tools//tools/build_defs/docker:docker.bzl", "docker_build")
+load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build", "docker_push")
 
 docker_build(
     name = "busybox",
@@ -30,7 +30,6 @@ docker_build(
     files = [
         "//cmd/klog-spoke",
     ],
-    repository = "kopeio",
 )
 
 docker_build(
@@ -40,5 +39,12 @@ docker_build(
     files = [
         "//cmd/klog-hub",
     ],
-    repository = "kopeio",
 )
+
+#docker_push(
+#    name = "push-klog-hub",
+#    image = "klog-hub",
+#    registry = "index.docker.io",
+#    repository = "kopeio/klog-hub",
+#    tag = "latest",
+#)

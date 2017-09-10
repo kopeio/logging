@@ -38,7 +38,6 @@ func main() {
 
 	options.GrpcPublicAuthenticationMethod = "kubernetes"
 
-	// TODO: Should there be a kubernetes service in kube-system?
 	options.KubernetesAuthenticationUrl = "https://kubernetes.default/api"
 	options.KubernetesAuthenticationCA = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 

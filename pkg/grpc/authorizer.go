@@ -28,7 +28,7 @@ func NewTokenAuthorizer(validTokens []string) *TokenAuthorizer {
 }
 
 func (t *TokenAuthorizer) Authorize(ctx context.Context) error {
-	md, ok := metadata.FromContext(ctx)
+	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
 		return AuthorizationRequired
 	}

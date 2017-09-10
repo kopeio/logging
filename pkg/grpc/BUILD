@@ -4,10 +4,7 @@ licenses(["notice"])
 
 load(
     "@io_bazel_rules_go//go:def.bzl",
-    "go_binary",
     "go_library",
-    "go_test",
-    "cgo_library",
 )
 
 go_library(
@@ -25,7 +22,5 @@ go_library(
         "@org_golang_google_grpc//credentials:go_default_library",
         "@org_golang_google_grpc//metadata:go_default_library",
         "@org_golang_x_net//context:go_default_library",
-        "//pkg/archive:go_default_library",
-        "//pkg/archive/s3archive:go_default_library",
     ],
 )
